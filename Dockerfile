@@ -9,8 +9,8 @@ RUN usermod -u 1000 www-data
 
 RUN apt-get update -y
 RUN apt-get install -y \ 
-    build-essentials libpng-dev libfreetype6-dev \
-    locales zip jpgoptim optipng pngquant gifsicle \
+    build-essential libpng-dev libfreetype6-dev \
+    locales zip jpegoptim optipng pngquant gifsicle \
     libjpeg62-turbo-dev vim git curl libzip-dev libgd-dev \ 
     unzip libpq-dev libcurl4-gnutls-dev zlib1g-dev \
     nginx nano net-tools nmap traceroute iputils-ping mc
