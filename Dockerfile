@@ -13,10 +13,10 @@ RUN apt-get install -y \
     locales zip jpegoptim optipng pngquant gifsicle \
     libjpeg62-turbo-dev vim git curl libzip-dev libgd-dev \ 
     unzip libpq-dev libcurl4-gnutls-dev zlib1g-dev libonig5\
-    nginx nano net-tools nmap traceroute iputils-ping mc wget automake
+    nginx nano net-tools nmap traceroute iputils-ping mc wget automake libtool
 
 
-run mkdir /tmp/oniguruma && wget -c https://github.com/kkos/oniguruma/archive/refs/tags/v6.9.8.tar.gz -O - | tar -xz -C /tmp/oniguruma/
+RUN mkdir /tmp/oniguruma && wget -c https://github.com/kkos/oniguruma/archive/refs/tags/v6.9.8.tar.gz -O - | tar -xz -C /tmp/oniguruma/
 WORKDIR /tmp/oniguruma/oniguruma-6.9.8
 
 RUN cd /tmp/oniguruma/oniguruma-6.9.8/
@@ -54,19 +54,15 @@ RUN chown -hR www-data:www-data /var/www
 
 WORKDIR /var/tmp
 
-RUN composer create-project laravel/laravel php-dashboard
-
-# Move Laravel files to correct place
-#RUN mv /var/tmp/temp/* /var/www/
-#RUN mv /var/tmp/temp/.* /var/www/
-
-RUN mv -f /var/tmp/php-dashboard/{.,}* /var/www/
-
-
 WORKDIR /var/www
 
+RUN cd /var/www/ 
+
+
 RUN chown -hR www-data:www-data /var/www
-RUN chown -hR www-data:www-data /var/www/{.,}*
+RUN chown -hR www-data:www-data /var/www/.*
+RUN chown -hR www-data:www-data /var/www/*
+
 
 
 RUN chmod -R 755 /var/www/storage

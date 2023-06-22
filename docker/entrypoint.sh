@@ -1,5 +1,20 @@
 #!/bin/bash
 
+
+cd /var/tmp/ && mkdir php-dashboard 
+
+cd php-dashboard && composer create-project laravel/laravel .
+
+# Move Laravel files to correct place
+#RUN mv /var/tmp/temp/* /var/www/
+#RUN mv /var/tmp/temp/.* /var/www/
+
+cd /var/tmp/ 
+
+mv ./php-dashboard/.* /var/www/
+mv ./php-dashboard/* /var/www/
+
+
 if [ ! -f ".env.example" ]; then
     echo "Creating env-example file for env $APP_ENV"
     touch .env.example
