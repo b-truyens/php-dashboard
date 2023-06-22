@@ -3,7 +3,7 @@
 
 cd /var/tmp/ && mkdir php-dashboard 
 
-cd php-dashboard && composer create-project laravel/laravel .
+composer create-project laravel/laravel php-dashboard
 
 # Move Laravel files to correct place
 #RUN mv /var/tmp/temp/* /var/www/
@@ -11,9 +11,12 @@ cd php-dashboard && composer create-project laravel/laravel .
 
 cd /var/tmp/ 
 
+rm ./php-dashboard/.env && rm ./php-dashboard/.env.example
+
 mv ./php-dashboard/.* /var/www/
 mv ./php-dashboard/* /var/www/
 
+cd /var/www/
 
 if [ ! -f ".env.example" ]; then
     echo "Creating env-example file for env $APP_ENV"
