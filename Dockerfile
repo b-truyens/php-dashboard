@@ -12,8 +12,17 @@ RUN apt-get install -y \
     build-essential libpng-dev libfreetype6-dev \
     locales zip jpegoptim optipng pngquant gifsicle \
     libjpeg62-turbo-dev vim git curl libzip-dev libgd-dev \ 
-    unzip libpq-dev libcurl4-gnutls-dev zlib1g-dev \
-    nginx nano net-tools nmap traceroute iputils-ping mc
+    unzip libpq-dev libcurl4-gnutls-dev zlib1g-dev libonig5\
+    nginx nano net-tools nmap traceroute iputils-ping mc wget automake
+
+
+run mkdir /tmp/oniguruma && wget -c https://github.com/kkos/oniguruma/archive/refs/tags/v6.9.8.tar.gz -O - | tar -xz -C /tmp/oniguruma/
+WORKDIR /tmp/oniguruma/oniguruma-6.9.8
+
+RUN cd /tmp/oniguruma/oniguruma-6.9.8/
+RUN autoreconf -vfi && ./configure
+RUN make && make install
+RUN onig-config --cflags --libs --prefix --exec-prefix
 
 RUN docker-php-ext-install pdo pdo_mysql bcmath curl opcache mbstring zip exif pcntl
 RUN docker-php-ext-configure gd --with-jpeg=/usr/include/ --with-freetype=/usr/include/
